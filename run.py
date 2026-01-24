@@ -21,3 +21,10 @@ def clean_data(df):
 
 df = clean_data(df)
 print(df.isnull().sum())
+
+#create new variable
+df['TotalPrice'] = df['Quantity'] * df['UnitPrice']
+print(df.head())
+
+#store cleaned data
+df.to_csv("Cleaned_Online_Retail.csv", index=False)
