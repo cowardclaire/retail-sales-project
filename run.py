@@ -36,3 +36,30 @@ print(df.head())
 #store cleaned data
 df.to_csv("Cleaned_Online_Retail.csv", index=False)
 
+#visualising data
+
+#graph showing total revenue over time
+daily = df.groupby(df['InvoiceDate'].dt.date)['TotalPrice'].sum()
+
+plt.figure(figsize=(12,5))
+plt.plot(daily)
+plt.title('Daily Revenue Over Time')
+plt.xlabel('Date')
+plt.ylabel('Revenue')
+plt.show()
+
+#bar chart showing top 10 products by revenue
+top_products = df.groupby('Description')['TotalPrice'].sum().sort_values(ascending=False).head(10)  
+plt.figure(figsize=(12,5))
+sns.barplot(x=top_products.values, y=top_products.index)
+plt.title('Top 10 Products by Revenue') 
+plt.xlabel('Revenue')
+plt.ylabel('Product Description')   
+plt.show()
+
+#pie chart showing revenue distribution by country
+country_revenue = df.groupby('Country')['TotalPrice'].sum()
+plt.figure(figsize=(8,8))   
+plt.pie(country_revenue, labels=country_revenue.index, autopct='%1.1f%%', startangle=140)
+plt.title('Revenue Distribution by Country')    
+plt.show()
